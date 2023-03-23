@@ -3,11 +3,28 @@ import { ref } from 'vue'
 import { useZipDataStore } from '@/stores/zipData'
 import BaseButton from '@/components/UI/BaseButton.vue'
 import BaseInput from '@/components/UI/BaseInput.vue'
+import { useRouter } from 'vue-router'
+import { getIpData } from '@/api/ip'
 
 const zipText = ref('')
 const zipStore = useZipDataStore()
-const getDataEvent = () => {
-  zipStore.getZipData(zipText)
+const isInputError = ref(false)
+const router = useRouter()
+const isValidUSZip = (sZip) => {
+  return /^\d{5}(-\d{4})?$/.test(sZip)
+}
+const getDataEvent = async () => {
+  console.log(navigator.userAgentData)
+  const res = await getIpData()
+  console.log(res.data)
+  if (isValidUSZip(zipText.value)) {
+    zipStore.getZipData(zipText)
+  } else {
+    isInputError.value = true
+  }
+}
+const checkIsValid = () => {
+  isInputError.value = !isValidUSZip(zipText.value)
 }
 </script>
 
@@ -25,8 +42,18 @@ const getDataEvent = () => {
                   type="text"
                   :label="{ text: 'ZIP', class: 'form-label' }"
                   placeholder="Type tour ZIP code"
+                  :error="isInputError"
+                  :errorMessage="'United States ZIP codes are five numerical digits long.'"
+                  @input="checkIsValid"
                 />
-                <BaseButton type="submit" color="primary" size="lg" fullWidth>Render</BaseButton>
+                <BaseButton
+                  type="submit"
+                  color="primary"
+                  size="lg"
+                  fullWidth
+                  :disabled="isInputError"
+                  >Render</BaseButton
+                >
               </form>
             </div>
           </div>

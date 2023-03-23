@@ -36,6 +36,10 @@ defineProps({
     type: Boolean,
     default: false
   },
+  errorMessage: {
+    type: String,
+    default: "Oops something went wrong"
+  },
   success: {
     type: Boolean,
     default: false
@@ -91,5 +95,6 @@ const getClasses = (size, success, error) => {
       :disabled="isDisabled"
       @input="updateInput"
     />
+    <div v-if="error" class="invalid-feedback">{{errorMessage}}</div>
   </div>
 </template>

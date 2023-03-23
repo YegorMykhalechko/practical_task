@@ -24,6 +24,7 @@ const store = useLoaderStore()
   <main>
     <RouterView />
   </main>
+  <notifications position="bottom left" />
 </template>
 
 <style scoped></style>

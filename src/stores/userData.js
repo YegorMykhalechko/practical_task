@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
-import { getZipData } from '@/api/zip'
+import { getIpData } from '@/api/ip'
 import { notify } from '@kyvg/vue3-notification'
 
-export const useZipDataStore = defineStore('zipData', {
+export const useUserDataStore = defineStore('zipData', {
   state: () => ({
-    zipData: null
+    userData: null
   }),
   actions: {
-    async getZipData(zip) {
+    async getIpData() {
       try {
-        const res = await getZipData(zip.value)
-        this.zipData = res.data
+        const res = await getIpData()
+        this.userData = res.data
         this.$router.push({ path: 'data' })
       } catch (err) {
         notify({
