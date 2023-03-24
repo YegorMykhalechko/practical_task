@@ -5,6 +5,7 @@ import BaseButton from '@/components/UI/BaseButton.vue'
 import BaseInput from '@/components/UI/BaseInput.vue'
 import { useRouter } from 'vue-router'
 import { getIpData } from '@/api/ip'
+import { getUserAgentData } from '@/api/userAgent'
 
 const zipText = ref('')
 const zipStore = useZipDataStore()
@@ -14,14 +15,19 @@ const isValidUSZip = (sZip) => {
   return /^\d{5}(-\d{4})?$/.test(sZip)
 }
 const getDataEvent = async () => {
-  console.log(navigator.userAgentData)
-  const res = await getIpData()
-  console.log(res.data)
-  if (isValidUSZip(zipText.value)) {
-    zipStore.getZipData(zipText)
-  } else {
-    isInputError.value = true
-  }
+  console.log(window.navigator.userAgent)
+
+  const resIp = await getIpData()
+  console.log(resIp.data)
+
+  const resUser = await getUserAgentData(window.navigator.userAgent, resIp.data.ip)
+  console.log(resUser.data)
+
+  // if (isValidUSZip(zipText.value)) {
+  //   zipStore.getZipData(zipText)
+  // } else {
+  //   isInputError.value = true
+  // }
 }
 const checkIsValid = () => {
   isInputError.value = !isValidUSZip(zipText.value)
