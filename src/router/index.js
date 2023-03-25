@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useZipDataStore } from '../stores/zipData'
 import HomeView from '../views/HomeView.vue'
 import DataView from '../views/DataView.vue'
+import NotFound from '../views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
           next({ name: 'home' })
         } else next()
       }
+    },
+    {
+      path: '/:pathMatch(.*)',
+      name: 'not-found',
+      component: NotFound
     }
   ]
 })
