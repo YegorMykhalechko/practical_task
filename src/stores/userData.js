@@ -38,7 +38,7 @@ export const useUserDataStore = defineStore('userData', {
 
     async getUserAgentData() {
       try {
-        const res = await getUserAgentData(window.navigator.userAgent, this.userData.ip)
+        const res = await getUserAgentData()
         this.userData = { ...this.userData, ...res.data }
       } catch (err) {
         notify({

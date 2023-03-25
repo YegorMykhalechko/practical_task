@@ -5,6 +5,9 @@ import { useZipDataStore } from '@/stores/zipData'
 import { useUserDataStore } from '@/stores/userData'
 //Components
 import BaseButton from '@/components/UI/BaseButton.vue'
+import BaseModal from '@/components/BaseModal.vue'
+
+const showModal = ref(false)
 
 const zipStore = useZipDataStore()
 const userDataStore = useUserDataStore()
@@ -13,7 +16,7 @@ const data = zipStore.$state.zipData
 const userData = userDataStore.$state.userData
 
 const getUserDataAll = () => {
-  console.log(userData)
+  showModal.value = true
 }
 
 onUnmounted(() => {
@@ -31,32 +34,66 @@ onUnmounted(() => {
             <div class="card p-4">
               <h1 class="text-center mb-4">ZIP : {{ data['post code'] }}</h1>
               <div class="mb-3">
-                County: 
-                <strong>{{ data.country }}</strong>;
+                County:
+                <strong>{{ data.country }}</strong
+                >;
               </div>
               <div class="mb-3">
-                Country Abbreviation: 
-                <strong>{{ data['country abbreviation'] }}</strong>;
+                Country Abbreviation:
+                <strong>{{ data['country abbreviation'] }}</strong
+                >;
               </div>
               <template v-for="place of data.places">
                 <div class="mb-3">
-                  Place: 
-                  <strong>{{ place['place name'] }}</strong>;
+                  Place:
+                  <strong>{{ place['place name'] }}</strong
+                  >;
                 </div>
                 <div class="mb-3">
-                  State: 
-                  <strong>{{ place.state }}</strong>;
+                  State:
+                  <strong>{{ place.state }}</strong
+                  >;
                 </div>
                 <div class="mb-3">
-                  State Abbreviation: 
-                  <strong>{{ place['state abbreviation'] }}</strong>;
+                  State Abbreviation:
+                  <strong>{{ place['state abbreviation'] }}</strong
+                  >;
                 </div>
               </template>
-              <BaseButton color="primary" size="lg" fullWidth @click="getUserDataAll">IP Lookup Button</BaseButton>
+              <BaseButton color="primary" size="lg" fullWidth @click="getUserDataAll">
+                IP Lookup Button
+              </BaseButton>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <BaseModal v-if="showModal" @close="showModal = false">
+    <template v-slot:title>User Data</template>
+    <template v-slot:content>
+      <div class="p-4">
+        <div class="mb-3">
+          ISP:
+          <strong>{{ userData.isp }}</strong
+          >;
+        </div>
+        <div class="mb-3">
+          City:
+          <strong>{{ userData.city }}</strong
+          >;
+        </div>
+        <div class="mb-3">
+          Region:
+          <strong>{{ userData.state_prov }}</strong
+          >;
+        </div>
+        <div class="mb-3">
+          Country:
+          <strong>{{ userData.country_name }}</strong
+          >;
+        </div>
+      </div>
+    </template>
+  </BaseModal>
 </template>

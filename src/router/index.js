@@ -15,12 +15,12 @@ const router = createRouter({
       path: '/data',
       name: 'data',
       component: DataView,
-      // beforeEnter: (to, from, next) => {
-      //   const zipStore = useZipDataStore()
-      //   if (!zipStore.zipData) {
-      //     next({ name: 'home' })
-      //   } else next()
-      // }
+      beforeEnter: (to, from, next) => {
+        const zipStore = useZipDataStore()
+        if (!zipStore.zipData) {
+          next({ name: 'home' })
+        } else next()
+      }
     }
   ]
 })

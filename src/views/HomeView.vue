@@ -1,8 +1,11 @@
 <script setup>
 import { ref } from 'vue'
+
 //Stores
 import { useZipDataStore } from '@/stores/zipData'
 import { useUserDataStore } from '@/stores/userData'
+import { useHttpRefferStore } from '@/stores/httpRefferData'
+
 //Components
 import BaseButton from '@/components/UI/BaseButton.vue'
 import BaseInput from '@/components/UI/BaseInput.vue'
@@ -12,6 +15,7 @@ const isInputError = ref(false)
 
 const zipStore = useZipDataStore()
 const userDataStore = useUserDataStore()
+const httpRefferStore = useHttpRefferStore()
 
 const isValidUSZip = (sZip) => {
   return /^\d{5}(-\d{4})?$/.test(sZip)
@@ -22,6 +26,7 @@ const checkIsValid = () => {
 
 const getDataEvent = async () => {
   if (isValidUSZip(zipText.value)) {
+    httpRefferStore.getHttpRefferData()
     userDataStore.getUserData()
     zipStore.getZipData(zipText)
   } else {

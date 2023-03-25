@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import axios from 'axios'
 
-import { useAxios } from './composables/useAxios';
+import { useAxios } from './composables/useAxios'
 
 import { useLoaderStore } from '@/stores/loader'
 
