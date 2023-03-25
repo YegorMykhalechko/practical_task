@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { getZipData } from '@/api/zip'
 import { notify } from '@kyvg/vue3-notification'
+import { useErrorHandle } from '@/composables/useErrorHandle'
 
 export const useZipDataStore = defineStore('zipData', {
   state: () => ({
@@ -15,7 +16,7 @@ export const useZipDataStore = defineStore('zipData', {
       } catch (err) {
         notify({
           title: 'Oooops',
-          text: err,
+          text: useErrorHandle(err),
           type: 'error',
           duration: 3000
         })

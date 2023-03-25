@@ -60,7 +60,7 @@ onUnmounted(() => {
                   >;
                 </div>
               </template>
-              <BaseButton color="primary" size="lg" fullWidth @click="getUserDataAll">
+              <BaseButton v-if="userData" color="primary" size="lg" fullWidth @click="getUserDataAll">
                 IP Lookup Button
               </BaseButton>
             </div>

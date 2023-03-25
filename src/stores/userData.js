@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { getIpData } from '@/api/ip'
 import { notify } from '@kyvg/vue3-notification'
 import { getUserAgentData } from '@/api/userAgent'
+import { useErrorHandle } from '@/composables/useErrorHandle'
 
 export const useUserDataStore = defineStore('userData', {
   state: () => ({
@@ -13,9 +14,10 @@ export const useUserDataStore = defineStore('userData', {
         await this.getIpData()
         await this.getUserAgentData()
       } catch (err) {
+        console.log(useErrorHandle(err))
         notify({
           title: 'Oooops',
-          text: err,
+          text: useErrorHandle(err),
           type: 'error',
           duration: 3000
         })
@@ -29,7 +31,7 @@ export const useUserDataStore = defineStore('userData', {
       } catch (err) {
         notify({
           title: 'Oooops',
-          text: err,
+          text: useErrorHandle(err),
           type: 'error',
           duration: 3000
         })
@@ -43,7 +45,7 @@ export const useUserDataStore = defineStore('userData', {
       } catch (err) {
         notify({
           title: 'Oooops',
-          text: err,
+          text: useErrorHandle(err),
           type: 'error',
           duration: 3000
         })
